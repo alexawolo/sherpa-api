@@ -1,0 +1,140 @@
+<div class="widget">
+        <h2>Need a travel visa? Find out here!</h2>
+        <div class="imageOneContainer">
+            <img src="../../assets/results-image.png" alt="Illustrations of passport documents and a stamp">
+        </div>
+    <div class="widgetContainer">
+        <div class="inputContainer">
+            <p>Travelling From:</p>
+            <div class="container">
+                <label for="citizenship" class="toggle" (click)="citizenshipToggleHandler()">{{userCitizenship ? userCitizenship : 'Select Citizenship'}}</label>
+                <div class="options" [ngClass]="{'hidden': !travellingFromIsOpened}">
+                    <div class="option" (click)="citizenshipInput('CA')">
+                        <span class="flag">🇨🇦</span>
+                        <span>Canada</span>
+                    </div>
+                    <div class="option" (click)="citizenshipInput('JP')">
+                        <span class="flag">🇯🇵</span>
+                        <span>Japan</span>
+                    </div>
+                    <div class="option" (click)="citizenshipInput('SE')" >
+                        <span class="flag">🇸🇪</span>
+                        <span>Sweden</span>
+                    </div>
+                    <div class="option" (click)="citizenshipInput('USA')">
+                        <span class="flag">🇺🇸</span>
+                        <span>USA</span>
+                    </div>
+                    <div class="option" (click)="citizenshipInput('EG')">
+                        <span class="flag">🇪🇬</span>
+                        <span>Egypt</span>
+                    </div>
+                    <div class="option" (click)="citizenshipInput('GBR')">
+                        <span class="flag">🇬🇧</span>
+                        <span>Britain</span>
+                    </div>
+                    <div class="option" (click)="citizenshipInput('ESP')">
+                        <span class="flag">🇪🇸</span>
+                        <span>Spain</span>
+                    </div>
+                    <div class="option" (click)="citizenshipInput('IS')">
+                        <span class="flag">🇮🇸</span>
+                        <span>Iceland</span>
+                    </div>
+                    <div class="option" (click)="citizenshipInput('TUR')">
+                        <span class="flag">🇹🇷</span>
+                        <span>Turkey</span>
+                    </div>
+                    <div class="option" (click)="citizenshipInput('AU')">
+                        <span class="flag">🇦🇺</span>
+                        <span>Australia</span>
+                    </div>
+                    <div class="option" (click)="citizenshipInput('FR')">
+                        <span class="flag">🇫🇷</span>
+                        <span>France</span>
+                    </div>          
+                </div>
+            </div>
+        </div>
+
+        <div class="inputContainer">
+            <p>Travelling To:</p>
+            <div class="container">
+                <label for="destination" class="toggle" (click)="destinationToggleHandler()">{{userDestination ? userDestination : 'Select Destination'}}</label>
+                <div class="options" [ngClass]="{'hidden': !travellingToIsOpened}">
+                    <div class="option" (click)="destinationInput('CA')">
+                        <span class="flag">🇨🇦</span>
+                        <span>Canada</span>
+                    </div>
+                    <div class="option" (click)="destinationInput('JP')">
+                        <span class="flag">🇯🇵</span>
+                        <span>Japan</span>
+                    </div>
+                    <div class="option" (click)="destinationInput('SE')" >
+                        <span class="flag">🇸🇪</span>
+                        <span>Sweden</span>
+                    </div>
+                    <div class="option" (click)="destinationInput('USA')">
+                        <span class="flag">🇺🇸</span>
+                        <span>USA</span>
+                    </div>
+                    <div class="option" (click)="destinationInput('EG')">
+                        <span class="flag">🇪🇬</span>
+                        <span>Egypt</span>
+                    </div>
+                    <div class="option" (click)="destinationInput('GBR')">
+                        <span class="flag">🇬🇧</span>
+                        <span>Britain</span>
+                    </div>
+                    <div class="option" (click)="destinationInput('ESP')">
+                        <span class="flag">🇪🇸</span>
+                        <span>Spain</span>
+                    </div>
+                    <div class="option" (click)="destinationInput('IS')">
+                        <span class="flag">🇮🇸</span>
+                        <span>Iceland</span>
+                    </div>
+                    <div class="option" (click)="destinationInput('TUR')">
+                        <span class="flag">🇹🇷</span>
+                        <span>Turkey</span>
+                    </div>
+                    <div class="option" (click)="destinationInput('AU')">
+                        <span class="flag">🇦🇺</span>
+                        <span>Australia</span>
+                    </div>
+                    <div class="option" (click)="destinationInput('FR')">
+                        <span class="flag">🇫🇷</span>
+                        <span>France</span>
+                    </div>          
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <button [disabled]="!userDestination || !userCitizenship" (click)="getVisas()">Check for visas</button>
+
+    <div class="resultsContainer" *ngIf="travelInfo">
+        <div class="resultsImageContainer">
+            <img src="../../assets/plane.png" alt="emoji styled airplane">
+        </div>
+
+        <div class="invalidResults" *ngIf="userDestination === userCitizenship">
+            <p>No Visa required for homebodies</p>
+            <p>🏠💞😌</p>
+        </div>
+
+        <div class="validResults" *ngIf="userDestination !== userCitizenship">
+            <p class="validResultsQuestion">What Visa is required?</p>
+            <p class="validResultsAnswer" *ngIf="travelInfo.visa[0].requirement === 'NOT_REQUIRED'">No visa required</p>
+            <p class="validResultsAnswer" *ngIf="travelInfo.visa[0].requirement === 'E_VISA'">eVisa is required</p>
+            <p class="validResultsAnswer" *ngIf="travelInfo.visa[0].requirement === 'ETA'">ETA is required</p>
+            <p class="validResultsAnswer" *ngIf="travelInfo.visa[0].requirement === 'EMBASSY_VISA'">Embassy visa is required</p>
+    
+            <p class="validResultsQuestion" *ngIf="travelInfo.visa[0].allowedStay !== null">How long are you allowed to visit?</p>
+            <p class="validResultsAnswer" *ngIf="travelInfo.visa[0].allowedStay !== null">{{travelInfo.visa[0].allowedStay}}</p>
+    
+            <p class="validResultsQuestion" *ngIf="travelInfo.visa[0].notes[0]">Additional information:</p>
+            <p class="validResultsAnswer" *ngIf="travelInfo.visa[0].notes[0]">{{travelInfo.visa[0].notes[0]}}</p>
+        </div>
+    </div>
+</div>
